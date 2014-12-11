@@ -198,6 +198,11 @@
 
 			},
 
+
+			validate_date : function (attribute, value, parameters) {
+				return !/Invalid|NaN/.test(new Date( value ).toString());
+			},
+
 			validate_numeric : function (attribute, value) {
 
 				return this.validate_match(attribute, value, /^-?\d+(\.\d*)?$/);
@@ -224,13 +229,13 @@
 
 			},
 
-                        validate_digits_between : function (attribute, value, parameters) {
+            validate_digits_between : function (attribute, value, parameters) {
 
-                                var size = value.length;
+                    var size = value.length;
 
-                                return size >= parseInt(parameters[0]) && size <= parseInt(parameters[1]);
+                    return size >= parseInt(parameters[0]) && size <= parseInt(parameters[1]);
 
-                        },
+            },
 
 			validate_min : function (attribute, value, parameters) {
 

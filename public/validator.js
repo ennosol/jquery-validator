@@ -72,7 +72,7 @@
 
 						thisValid = method ?
 							method.apply(validations, [name, value, rule.params]) :
-							true;
+							false;
 
 						valid = valid && thisValid;
 
@@ -165,6 +165,12 @@
 				if (this.validate_required(parameters[0], $("[name=\"" + parameters[0] + "\"]").val())) {
 					return this.validate_required(attribute, value);
 				}
+
+				return true;
+
+			},
+
+			validate_exists_id : function (attribute, value) {
 
 				return true;
 

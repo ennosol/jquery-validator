@@ -72,7 +72,7 @@
 
 						thisValid = method ?
 							method.apply(validations, [name, value, rule.params]) :
-							false;
+							true;
 
 						valid = valid && thisValid;
 

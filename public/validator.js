@@ -37,6 +37,23 @@
 
 			},
 
+            hasRule : function (rules) {
+                for(var key in this.rules){
+                    if(this.rules.hasOwnProperty(key)) {
+                        if(rules.constructor === Array){
+                            for(var rule in rules){
+                                if(rules.hasOwnProperty(rule) && this.rules[key].method === "validate_" + rules[rule]) {
+                                    return true;
+                                }
+                            }
+                        } else if(this.rules[key].method === "validate_" + rules) {
+                            return true;
+                        }
+                    }
+                }
+                return false;
+            },
+
 			validate : function (options) {
 
 				var selector = options.selector,
@@ -58,7 +75,7 @@
 						return true;
 					}
 
-					rules = validations.parseRules(validation_rules);
+                    validations.rules = rules = validations.parseRules(validation_rules);
 
 					$.each(rules, function (idx, rule) {
 
@@ -109,7 +126,7 @@
 
 			size : function (attribute, value) {
 
-				if (this.validate_numeric(attribute, value)) {
+                if (this.validate_numeric(attribute, value) && this.hasRule(["numeric", "integer"])) {
 					return parseFloat(value);
 				}
 

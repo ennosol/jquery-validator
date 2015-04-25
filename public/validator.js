@@ -45,7 +45,6 @@
 					allValid = true;
 
 				$(selector).each(function () {
-
 					var validation_rules = $(this).data(attribute),
 						name  = $(this).attr("name"),
 						value = $(this).val(),
@@ -380,6 +379,16 @@
 				this.each(function () {
 
 					$(this).on(options.events, function (evt) {
+						// Add form id to selectors
+     				    // e.g. (#formid input, #formid select) instead of (input, select)
+						if (typeof options.formid !== 'undefined') {
+							var selectorArray = selector.split(',');
+							var formSelectorArray = [];
+							selectorArray.forEach(function(selector) {
+								formSelectorArray.push('#' + options.formid + ' ' + selector);
+							});
+							selector = formSelectorArray.join(',');
+						}
 
 						var valid;
 

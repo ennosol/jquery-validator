@@ -45,6 +45,7 @@
 					allValid = true;
 
 				$(selector).each(function () {
+
 					var validation_rules = $(this).data(attribute),
 						name  = $(this).attr("name"),
 						value = $(this).val(),
@@ -377,15 +378,16 @@
 				options.events = options.events.replace(/(\w+)/g, "$1" + namespace + " ");
 
 				this.each(function () {
+					var formid = $(this).attr('id');
 
 					$(this).on(options.events, function (evt) {
 						// Add form id to selectors
      				    // e.g. (#formid input, #formid select) instead of (input, select)
-						if (typeof options.formid !== 'undefined') {
+						if (typeof formid !== 'undefined') {
 							var selectorArray = selector.split(',');
 							var formSelectorArray = [];
 							selectorArray.forEach(function(selector) {
-								formSelectorArray.push('#' + options.formid + ' ' + selector);
+								formSelectorArray.push('#' + formid + ' ' + selector);
 							});
 							selector = formSelectorArray.join(',');
 						}

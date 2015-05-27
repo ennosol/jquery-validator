@@ -71,7 +71,7 @@
 						method = validations[rule.method] || options[rule.method];
 
 						thisValid = method ?
-							method.apply(validations, [name, value, rule.params]) :
+							method.apply(validations, [name, value, rule.params, validation_rules]) :
 							false;
 
 						valid = valid && thisValid;
@@ -170,6 +170,12 @@
 
 			},
 
+			validate_string : function (attribute, value) {
+
+				return true;
+
+			},
+
 			validate_exists_id : function (attribute, value) {
 
 				return true;
@@ -227,20 +233,28 @@
 
 			},
 
-			validate_between : function (attribute, value, parameters) {
+			validate_between : function (attribute, value, parameters, validation_rules) {
+				// Check value between 2 string length values
+				if (validation_rules.indexOf('string') >= 0) {
 
-				var size = this.size(attribute, value);
-
-				return size >= parseFloat(parameters[0]) && size <= parseFloat(parameters[1]);
-
-			},
-
-            validate_digits_between : function (attribute, value, parameters) {
-
-                    var size = value.length;
+					var size = value.length;
 
                     return size >= parseInt(parameters[0]) && size <= parseInt(parameters[1]);
 
+				// Check value between 2 numeric values
+				} else {
+
+					var size = this.size(attribute, value);
+
+					return size >= parseFloat(parameters[0]) && size <= parseFloat(parameters[1]);
+
+				}
+			},
+
+            validate_digits_between : function (attribute, value, parameters) {
+                    var size = value.length;
+
+                    return this.validate_numeric(attribute, value) && size >= parseInt(parameters[0]) && size <= parseInt(parameters[1]);
             },
 
 			validate_min : function (attribute, value, parameters) {

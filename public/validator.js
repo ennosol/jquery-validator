@@ -72,7 +72,7 @@
 
 						thisValid = method ?
 							method.apply(validations, [name, value, rule.params, validation_rules]) :
-							false;
+							true; // return true if the method not exists
 
 						valid = valid && thisValid;
 
@@ -171,6 +171,12 @@
 			},
 
 			validate_string : function (attribute, value) {
+
+				return true;
+
+			},
+
+			validate_date_format : function (attribute, value) {
 
 				return true;
 
@@ -399,9 +405,15 @@
      				    // e.g. (#formid input, #formid select) instead of (input, select)
 						if (typeof formid !== 'undefined') {
 							var selectorArray = selector.split(',');
+
 							var formSelectorArray = [];
 							selectorArray.forEach(function(selector) {
-								formSelectorArray.push('#' + formid + ' ' + selector);
+								// We have to add the formid just at once
+								if (selector.indexOf(formid) < 0) {
+									formSelectorArray.push('#' + formid + ' ' + selector);
+								} else {
+									formSelectorArray.push(selector);
+								}
 							});
 							selector = formSelectorArray.join(',');
 						}

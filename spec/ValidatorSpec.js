@@ -275,7 +275,7 @@ describe('Validator', function() {
                 expect(elemValid).toEqual(true);
                 expect(formValid).toEqual(true);
             });
-        
+
         });
 
         it ('should fail an unchecked checkbox input', function() {
@@ -307,7 +307,7 @@ describe('Validator', function() {
                 expect(elemValid).toEqual(false);
                 expect(formValid).toEqual(false);
             });
-        
+
         });
 
         it ('should pass "1" in a text input', function() {
@@ -928,7 +928,7 @@ describe('Validator', function() {
                 elemValid = null,
                 formValid = null;
 
-            textInput.data('validations', 'between:9,10')
+            textInput.data('validations', 'numeric|between:9,10')
                 .val('9.5');
 
             testForm.validator($.extend({
@@ -959,9 +959,9 @@ describe('Validator', function() {
             var elemsValid = [],
                 formValid = null;
 
-            textInput.data('validations', 'between:9,10')
+            textInput.data('validations', 'numeric|between:9,10')
                 .val('9.000000');
-            passwordInput.data('validations', 'between:9,10')
+            passwordInput.data('validations', 'numeric|between:9,10')
                 .val('10.000000');
 
             testForm.validator($.extend({
@@ -989,9 +989,9 @@ describe('Validator', function() {
             var elemsValid = [],
                 formValid = null;
 
-            textInput.data('validations', 'between:9,10')
+            textInput.data('validations', 'numeric|between:9,10')
                 .val('8.999999');
-            passwordInput.data('validations', 'between:9,10')
+            passwordInput.data('validations', 'numeric|between:9,10')
                 .val('10.000001');
 
             testForm.validator($.extend({
@@ -1429,7 +1429,7 @@ describe('Validator', function() {
             });
 
         });
-        
+
         it ('should pass for a negative integer', function() {
 
             var elem = null,
@@ -1459,7 +1459,7 @@ describe('Validator', function() {
                 expect(elemValid).toEqual(true);
                 expect(formValid).toEqual(true);
             });
-            
+
         });
 
         it ('should fail for a float', function() {
@@ -1567,7 +1567,7 @@ describe('Validator', function() {
                 elemValid = null,
                 formValid = null;
 
-            textInput.data('validations', 'ip')
+            textInput.data('validations', 'numeric|ip')
                 .val('256.12.34.56');
 
             testForm.validator($.extend({
@@ -1667,7 +1667,7 @@ describe('Validator', function() {
                 elemValid = null,
                 formValid = null;
 
-            textInput.data('validations', 'max:10')
+            textInput.data('validations', 'numeric|max:10')
                 .val('11');
 
             testForm.validator($.extend({
@@ -1734,7 +1734,7 @@ describe('Validator', function() {
                 elemValid = null,
                 formValid = null;
 
-            textInput.data('validations', 'min:10')
+            textInput.data('validations', 'numeric|min:10')
                 .val('10');
 
             testForm.validator($.extend({
@@ -1766,7 +1766,7 @@ describe('Validator', function() {
                 elemValid = null,
                 formValid = null;
 
-            textInput.data('validations', 'min:10')
+            textInput.data('validations', 'numeric|min:10')
                 .val('11');
 
             testForm.validator($.extend({
@@ -2524,7 +2524,7 @@ describe('Validator', function() {
                 elemValid = null,
                 formValid = null;
 
-            textInput.data('validations', 'size:10')
+            textInput.data('validations', 'numeric|size:10')
                 .val('10');
 
             testForm.validator($.extend({

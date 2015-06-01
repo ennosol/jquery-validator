@@ -37,6 +37,23 @@
 
 			},
 
+			hasRule : function (checked_rules) {
+				for (var key in this.rules){
+                    if (this.rules.hasOwnProperty(key)) {
+                        if (checked_rules.constructor === Array){
+                            for (var rule in checked_rules){
+                                if (checked_rules.hasOwnProperty(rule) && this.rules[key].method === "validate_" + checked_rules[rule]) {
+                                    return true;
+                                }
+                            }
+                        } else if (this.rules[key].method === "validate_" + checked_rules) {
+                            return true;
+                        }
+                    }
+                }
+                return false;
+            },
+
 			validate : function (options) {
 
 				var selector = options.selector,
@@ -45,7 +62,6 @@
 					allValid = true;
 
 				$(selector).each(function () {
-
 					var validation_rules = $(this).data(attribute),
 						name  = $(this).attr("name"),
 						value = $(this).val(),
@@ -58,7 +74,7 @@
 						return true;
 					}
 
-					rules = validations.parseRules(validation_rules);
+					validations.rules = rules = validations.parseRules(validation_rules);
 
 					$.each(rules, function (idx, rule) {
 
@@ -109,7 +125,7 @@
 
 			size : function (attribute, value) {
 
-				if (this.validate_numeric(attribute, value)) {
+				if (this.validate_numeric(attribute, value) && this.hasRule(["numeric", "integer"])) {
 					return parseFloat(value);
 				}
 
@@ -156,6 +172,10 @@
 					return $("[name=\"" + attribute + "\"]:checked").val() !== undefined;
 				}
 
+
+
+
+
 				return this.validate_match(attribute, value, /[^\s]+/);
 
 			},
@@ -165,24 +185,6 @@
 				if (this.validate_required(parameters[0], $("[name=\"" + parameters[0] + "\"]").val())) {
 					return this.validate_required(attribute, value);
 				}
-
-				return true;
-
-			},
-
-			validate_string : function (attribute, value) {
-
-				return true;
-
-			},
-
-			validate_date_format : function (attribute, value) {
-
-				return true;
-
-			},
-
-			validate_exists_id : function (attribute, value) {
 
 				return true;
 
@@ -241,20 +243,20 @@
 
 			validate_between : function (attribute, value, parameters, validation_rules) {
 				// Check value between 2 string length values
-				if (validation_rules.indexOf('string') >= 0) {
+				/*if (validation_rules.indexOf('string') >= 0) {
 
 					var size = value.length;
 
                     return size >= parseInt(parameters[0]) && size <= parseInt(parameters[1]);
 
 				// Check value between 2 numeric values
-				} else {
+				} else {*/
 
 					var size = this.size(attribute, value);
 
 					return size >= parseFloat(parameters[0]) && size <= parseFloat(parameters[1]);
 
-				}
+				//}
 			},
 
             validate_digits_between : function (attribute, value, parameters) {
